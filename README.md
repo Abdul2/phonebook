@@ -28,7 +28,7 @@ Below is description of how I went about this simple example.
    	phone_number varchar(255));
 	* # \q
    ```
-  3.created a Go project on Eclipse 
+  3. created a Go project on Eclipse 
   4. imported pq driver `go get github.com/lib/pq`
   5. looked for sample code and played with it until it worked.
   6. wrote README.md to remind me of what i did (it maybe of use to others)
