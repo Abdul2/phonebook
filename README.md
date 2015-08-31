@@ -18,6 +18,7 @@ Below is description of how I went about this simple example.
 
  1. Installed postgres.app on Mac machine.  postgres instaltion  creates an posgress account for you.  
  2. created a  database and table
+	
 	```
 	* $ psql
 	* # create database phonebook ;
@@ -28,6 +29,7 @@ Below is description of how I went about this simple example.
    	phone_number varchar(255));
 	* # \q
    ```
+   
   3. created a Go project on Eclipse 
   4. imported pq driver `go get github.com/lib/pq`
   5. looked for sample code and played with it until it worked.
@@ -37,7 +39,8 @@ Below is description of how I went about this simple example.
 
   1. Comment on the code
   2. Extend code to cover full db operations 
-  3. Organise the code into packages      
+  3. Organise the code into packages
+  4. Code is not DRY. too much repeated error handling       
   
   
   

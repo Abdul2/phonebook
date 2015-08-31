@@ -1,31 +1,54 @@
 package main
 
+// the underscore means that the package is not in the scope of this project
+// i had to import the 'pg' through a 'go get' call 
+
 import (
 
-"fmt"
+	"fmt"
 	_ "github.com/lib/pq"
 	"database/sql"
 )
 
+//
 var selectStatement = `select id, name from contact limit 10`
+
 
 func main() {
 	
 	
 		fmt.Printf("testing..\n")
 
-		var db *sql.DB
-		var err error
 
-		db, err = sql.Open("postgres", "user=abdul-rashidabdi dbname=phonebook host=localhost sslmode=disable")
+		// if ssl not enabled on the db the code will fail 
+		// Open will validate the arguments but will not create a connection
+		// to validate the source exist do a Ping 
+		
+		db, err := sql.Open("postgres", "user=abdul-rashidabdi dbname=phonebook host=localhost sslmode=disable")
 
+		
+		//in case of error print the erro and exit 
 		if err != nil {
-		fmt.Printf("sql.Open error: %v\n",err)
+		fmt.Printf(err.Error())
 		return
 		}
 
+		// try a Ping
+		
+		err = db.Ping()
+		
+		if err != nil {
+		fmt.Printf(err.Error())
+		return
+		} else{
+			
+			fmt.Printf ("Ping worked: data source exist \n ")
+			}
+
+		//when are you done with db oprations exit
 		defer db.Close()
 
+		//always antipate error
 		err = doSelect(db)
 	
 		if err != nil {
@@ -35,41 +58,47 @@ func main() {
 
 }
 
+
+//doSelect a poniter to db.Open() object that we have obtained in main()
+//  if all goes well it will return nil otherwise it will return an error 
 func doSelect(db *sql.DB) error {
 	
-	var stmt *sql.Stmt
-	var err error
 
-	stmt, err = db.Prepare(selectStatement)
+	//use the db.Open() to return a prepared statement to be used at later stage 
+	stmt, err := db.Prepare(selectStatement)
 	
+	//if error, return it to main() to deal with the error
 	if err != nil {
-		fmt.Printf("db.Prepare error: %v\n",err)
+		fmt.Printf(err.Error())
 		return err
 	}
 
-	var rows *sql.Rows
+	//Query executes a prepared query statement with the given arguments
+	// and returns the query results as a *Rows. [this is direct from Go docs]
 
-	rows, err = stmt.Query()
+	rows, err := stmt.Query()
 	if err != nil {
-		fmt.Printf("stmt.Query error: %v\n",err)
+		fmt.Printf(err.Error())
 		return err
 	}
-
+ 
+ 	//once done with statement close it.
 	defer stmt.Close()
 
 	for rows.Next() {
-		var firstname string
-		var lastname string
-
-
-		err = rows.Scan(&firstname, &lastname)
+		
+		var id string
+		var name string
+		
+		// to avoid caller having copies of values, pointers are used 
+		err = rows.Scan(&id, &name)
 		if err != nil {
 			fmt.Printf("rows.Scan error: %v\n",err)
 			return err
 		}
 
-		fmt.Printf("firstname: %v lastname: %v \n",
-			firstname, lastname);
+		// first %v is replaced by value of id and second %v by value of name 
+		fmt.Printf("firstname: %v lastname: %v \n", id, name);
 	}
 
 	return nil
