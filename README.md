@@ -26,6 +26,7 @@ Steps
     
  2. created a  database and table
 
+	```
     psql
     create database phonebook ;
      \c phonebook
@@ -34,7 +35,7 @@ Steps
     name varchar(255),
     phone_number varchar(255));
     \q
-
+   ```
  
 
  3. created a Go project on Eclipse 
