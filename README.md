@@ -27,14 +27,14 @@ Steps
  2. created a  database and table
 
 	```
-    psql
-    create database phonebook ;
-     \c phonebook
-    create table contact (
-    id serial primary key ,
-    name varchar(255),
-    phone_number varchar(255));
-    \q
+    $ psql
+    $ create database phonebook ;
+    $ \c phonebook;
+    $ create table contact (
+      id serial primary key ,
+      name varchar(255);
+    $ phone_number varchar(255));
+    $ \q
    ```
  
 
