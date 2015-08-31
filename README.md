@@ -19,14 +19,14 @@ Below is description of how I went about this simple example.
  1. Installed postgres.app on Mac machine.  postgres instaltion  creates an posgress account for you.  
  2. created a  database and table
 	```
-	$ psql
-	# create database phonebook ;
-	# \c phonebook
-	# create table contact (
-   	id serial primary key ,
+	* $ psql
+	* # create database phonebook ;
+	* # \c phonebook
+	* # create table contact (
+   	* id serial primary key ,
    	name varchar(255),
    	phone_number varchar(255));
-	# \q
+	* # \q
    ```
   3.created a Go project on Eclipse 
   4. imported pq driver `go get github.com/lib/pq`
