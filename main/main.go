@@ -23,8 +23,8 @@ func main() {
 		// if ssl not enabled on the db the code will fail 
 		// Open will validate the arguments but will not create a connection
 		// to validate the source exist do a Ping 
-		
-		db, err := sql.Open("postgres", "user=abdul-rashidabdi dbname=phonebook host=localhost sslmode=disable")
+		//replace user 
+		db, err := sql.Open("postgres", "user=user-name dbname=phonebook host=localhost sslmode=disable")
 
 		
 		//in case of error print the erro and exit 
